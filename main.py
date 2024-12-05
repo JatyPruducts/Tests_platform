@@ -1,6 +1,6 @@
-from fastapi import FastAPI, HTTPException
-from typing import Optional, List, Dict
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException, Path, Query, Body
+from typing import Optional, List, Dict, Annotated
+from pydantic import BaseModel, Field
 
 # uvicorn main:app --reload
 app = FastAPI()
@@ -23,6 +23,13 @@ class Post(BaseModel):
     title: str
     body: str
     author: User
+
+
+class UserCreate(BaseModel):
+    name: Annotated[
+        str, Field(..., title="User name", min_length=2, max_length=20)
+    ]
+    age: Annotated[int, Field(...,title="User age", ge=1, le=120)]
 
 
 users = [
@@ -56,7 +63,7 @@ async def add_item(post: PostCreate) -> Post:
 
 
 @app.get("/items/{id}")
-async def items_id(id: int) -> Post:
+async def items_id(id: Annotated[int, Path(..., title='Указываем ID поста', ge=1, lt=100)]) -> Post:  # ge=1 - минимальное значение
     for post in posts:
         if post["id"] == id:
             return Post(**post)
@@ -64,12 +71,30 @@ async def items_id(id: int) -> Post:
 
 
 @app.get("/search")
-async def search(post_id: Optional[int] = None, post_title: Optional[str] = None) -> Dict[str, Optional[Post]]:
-    # http://127.0.0.1:8000/search?post_id=1&post_title=News_1
-    if post_id and post_title:
+async def search(post_id: Annotated[
+    Optional[int],
+    Query(title='ID of post to search for', ge=1, le=50)]
+) -> Dict[str, Optional[Post]]:
+    # http://127.0.0.1:8000/search?post_id=1
+    if post_id:
         for post in posts:
-            if post["id"] == post_id and post["title"] == post_title:
+            if post["id"] == post_id:
                 return {"data": Post(**post)}
         raise HTTPException(status_code=404, detail="Post not found")
     else:
         return {"data": None}
+
+
+@app.post("/user/add")
+async def add_user(user: Annotated[
+    UserCreate,
+    Body(..., example={
+        "name": "UserName",
+        "age": 1
+    })
+]) -> User:
+    new_user_id = len(users) + 1
+    new_user = {"id": new_user_id, "name": user.name, "age": user.age}
+    users.append(new_user)
+
+    return User(**new_user)
