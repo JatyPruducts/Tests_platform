@@ -28,10 +28,28 @@ export default {
   methods: {
     onSubmit(event)
     {
+      var logex = "vanya"; //Пример логина, потом заменим на вводимое из БД
+      var pasex = 123; //Пример пароля, потом заменим на вводимое из БД
       event.preventDefault();
-      if (this.form.login == "") return document.getElementById("input-1").classList.add('is-invalid');
-      document.getElementById("input-1").classList.remove('is-invalid');
+      //Проверка на пустые значения
+      if (this.form.login == "") return document.getElementById("input-1").classList.add('is-invalid'); 
+      document.getElementById("input-1").classList.remove('is-invalid');  
       if (this.form.password == "") return document.getElementById("input-2").classList.add('is-invalid');
+      document.getElementById("input-2").classList.remove('is-invalid');
+      //Проверка на верно введенные значения
+      if (this.form.login != logex) 
+      {
+        this.form.login = ""; 
+        document.getElementById("input-1").placeholder = "Введите существующий логин"
+        return document.getElementById("input-1").classList.add('is-invalid');
+      }
+      if (this.form.password != pasex) 
+      {
+        this.form.password = ""; 
+        document.getElementById("input-2").placeholder = "Введите существующий пароль"
+        return document.getElementById("input-2").classList.add('is-invalid');
+      }
+      document.getElementById("input-1").classList.remove('is-invalid');
       document.getElementById("input-2").classList.remove('is-invalid');
       alert(JSON.stringify(this.form));
     }
