@@ -52,7 +52,7 @@ export default {
       document.getElementById("input-1").classList.remove('is-invalid');
       document.getElementById("input-2").classList.remove('is-invalid');
       alert(JSON.stringify(this.form));
-      this.$router.push('/admin/profile');
+      this.$router.push('/admin/main');
     }
   }
 };
