@@ -39,7 +39,7 @@ class StudentBase(BaseModel):
 
 
 class Student(StudentBase):
-    id: int
+    student_id: int
 
     class Config:
         orm_mode = True

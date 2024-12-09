@@ -8,9 +8,9 @@ class Users(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    surname = Column(String, index=True)
-    role = Column(String, index=True)
+    name = Column(String)
+    surname = Column(String)
+    role = Column(String)
     login = Column(String, index=True, unique=True)
     password = Column(String)
     ready_lessons = Column(JSON)

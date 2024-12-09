@@ -2,9 +2,9 @@ from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 import bcrypt
 
-from models import Base, Users
+from models import Base, Users, StudentsDB
 from database import engine, session_local
-from schemas import UserCreate, User, UserInfo
+from schemas import UserCreate, User, UserInfo, Student, StudentCreate
 
 
 def hash_password(password):
@@ -70,3 +70,18 @@ async def login_user(user_login: str, user_password: str, db: Session = Depends(
     if not check_password(db_user.password, user_password):
         raise HTTPException(status_code=401, detail="Invalid password")
     return db_user
+
+
+@app.post("/student/create/", response_model=Student)  # модель возвращаемого ответа
+async def create_student(student: StudentCreate, db: Session = Depends(get_db)):
+    teacher = db.query(Users).filter(Users.login == student.teacher_login).first()
+    if not teacher or teacher.role != "teacher":
+        raise HTTPException(status_code=404, detail="Такой учитель не найден")
+    new_student = StudentsDB(
+        user_id=student.user_id,
+        teacher_login=student.teacher_login
+    )
+    db.add(new_student)
+    db.commit()
+    db.refresh(new_student)
+    return new_student
