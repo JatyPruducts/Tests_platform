@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import FastAPI, HTTPException, Path, Query, Body, Depends
 from sqlalchemy.orm import Session
 import bcrypt
@@ -5,7 +7,7 @@ import bcrypt
 from fastapi.middleware.cors import CORSMiddleware
 from models import Base, Users
 from database import engine, session_local
-from schemas import UserCreate, User
+from schemas import UserCreate, User, UserInfo
 
 
 def hash_password(password):
@@ -36,8 +38,11 @@ def get_db():
         db.close()
 
 
-@app.post("/create_user/", response_model=User)
-async def create_user(user: UserCreate, db: Session = Depends(get_db)) -> Users | str:
+@app.post("/user/create/", response_model=User)  # модель возвращаемого ответа
+async def create_user(user: UserCreate, db: Session = Depends(get_db)) -> Users:
+    existing_user = db.query(Users).filter(Users.login == user.login).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="User already exists")
     db_user = Users(
         name=user.name,
         surname=user.surname,
@@ -45,10 +50,16 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)) -> Users 
         login=user.login,
         password=hash_password(user.password),
         ready_lessons={}
-        )
+    )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
 
 
+@app.get("/user/user_info={user_id}", response_model=UserInfo)  # модель возвращаемого ответа
+async def get_info_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = db.query(Users).filter(Users.id == user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user

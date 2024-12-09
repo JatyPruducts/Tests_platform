@@ -20,3 +20,11 @@ class User(UserBase):
 
 class UserCreate(UserBase):
     pass
+
+
+class UserInfo(BaseModel):
+    name: str
+    surname: str
+    role: str
+    login: str
+    ready_lessons: dict
