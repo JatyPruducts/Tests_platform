@@ -1,7 +1,14 @@
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+#app 
+{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    margin-top: 60px;
-  }
+
+}
+html, body
+{
+  height: 95%; 
+  background: rgb(222,253,255 );
+  background: linear-gradient(0deg, rgba(222,253,255,1) 0%, rgba(255,255,255,1) 50%, rgba(222,253,255,1) 100% );
+}
