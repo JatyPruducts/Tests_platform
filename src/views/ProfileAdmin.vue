@@ -8,7 +8,7 @@
             <div class="offcanvas-body">
                 <ul>
                     <li v-for="lecture in lectures" :key="lecture.title">
-                        <a href="#" @click.prevent="loadLecture(lecture.file)">{{ lecture.title }}</a>
+                        <a href="#" @click.prevent="loadLecture(lecture.title, lecture.file)">{{ lecture.title }}</a>
                     </li>
                 </ul>
             </div>
@@ -34,6 +34,7 @@
     <body>
         <b-card>
             <b-card-body style="position:relative; height:85vh; overflow-y:scroll; text-align: left;">
+                <h1>{{ lectureTitle }}</h1>
                 <div v-html="text"></div>  <!--текст будем брать из текстового файла-->
             </b-card-body>
         </b-card>
@@ -49,6 +50,7 @@ export default {
       return {
         Uname: "Иван",
         text: "",
+        lectureTitle: "",
         lectures: [
             {title: "Лекция 1", file: "/lectures/SomeText.docx"},
             {title: "Лекция 2", file: "/lectures/Lecture2.docx"}
@@ -56,15 +58,16 @@ export default {
         };
     },
     methods: {
-        async loadLecture(file) {
+        async loadLecture(title, file) {
+            this.lectureTitle = title; // Устанавливаем заголовок лекции из массива
             try {
                 const response = await fetch(file);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
 
-                const arrayBuffer = await response.arrayBuffer(); // Получаем массив байтов
-                const { value: html } = await mammoth.convertToHtml({ arrayBuffer }); // Конвертируем в HTML
+                const arrayBuffer = await response.arrayBuffer();
+                const { value: html } = await mammoth.convertToHtml({ arrayBuffer });
                 this.text = html; // Сохраняем HTML для отображения
             } catch (error) {
                 console.error('Error fetching the lecture:', error);
