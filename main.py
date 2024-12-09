@@ -1,10 +1,7 @@
-from typing import List
-
-from fastapi import FastAPI, HTTPException, Path, Query, Body, Depends
+from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 import bcrypt
 
-from fastapi.middleware.cors import CORSMiddleware
 from models import Base, Users
 from database import engine, session_local
 from schemas import UserCreate, User, UserInfo
@@ -39,7 +36,7 @@ def get_db():
 
 
 @app.post("/user/create/", response_model=User)  # модель возвращаемого ответа
-async def create_user(user: UserCreate, db: Session = Depends(get_db)) -> Users:
+async def create_user(user: UserCreate, db: Session = Depends(get_db)) -> User:
     existing_user = db.query(Users).filter(Users.login == user.login).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="User already exists")

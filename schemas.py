@@ -23,8 +23,28 @@ class UserCreate(UserBase):
 
 
 class UserInfo(BaseModel):
+    id: int
     name: str
     surname: str
     role: str
     login: str
     ready_lessons: dict
+
+
+#################################
+
+class StudentBase(BaseModel):
+    user_id: int
+    teacher_login: str
+
+
+class Student(StudentBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class StudentCreate(StudentBase):
+    pass
+
