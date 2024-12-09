@@ -1,8 +1,8 @@
 <template>  
   <div class="bg-white position-absolute mx-auto top-50 start-50 translate-middle 
-  border border-opacity-25 p-3 shadow rounded" style="height: 50vb; width: 60vb;">
+  border border-opacity-25 p-3 shadow rounded" style="height: 350px; width: 400px;">
     <h2>Вход в аккаунт</h2>
-    <b-form @submit="onSubmit" class="w-75 mx-auto border border-dark rounded border-opacity-25 p-3 shadow">
+    <b-form @submit="onSubmit" class="mx-auto border border-dark rounded border-opacity-25 p-3 shadow" style="height: 250px; width: 300px;">
       <b-form-group id="login" label="Логин:" label-for="input-1" class="text-start">
         <b-form-input id="input-1" type="text" placeholder="Введите логин" v-model="form.login"></b-form-input>
       </b-form-group>
@@ -46,22 +46,14 @@ export default {
       if (this.form.password != pasex) 
       {
         this.form.password = ""; 
-        document.getElementById("input-2").placeholder = "Введите существующий пароль"
+        document.getElementById("input-2").placeholder = "Введите верный пароль"
         return document.getElementById("input-2").classList.add('is-invalid');
       }
       document.getElementById("input-1").classList.remove('is-invalid');
       document.getElementById("input-2").classList.remove('is-invalid');
       alert(JSON.stringify(this.form));
+      this.$router.push('/admin/profile');
     }
   }
 };
 </script>
-
-<style>
-html, body
-{
-  height: 95%; 
-  background: rgb(222,253,255 );
-  background: linear-gradient(0deg, rgba(222,253,255,1) 0%, rgba(255,255,255,1) 50%, rgba(222,253,255,1) 100% );
-}
-</style>
