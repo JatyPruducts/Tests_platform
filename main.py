@@ -63,3 +63,13 @@ async def get_info_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+@app.post("/user/login/", response_model=UserInfo)
+async def login_user(user_login: str, user_password: str, db: Session = Depends(get_db)):
+    db_user = db.query(Users).filter(Users.login == user_login).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    if not check_password(db_user.password, user_password):
+        raise HTTPException(status_code=401, detail="Invalid password")
+    return db_user
