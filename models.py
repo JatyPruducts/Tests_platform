@@ -13,7 +13,6 @@ class Users(Base):
     role = Column(String)
     login = Column(String, index=True, unique=True)
     password = Column(String)
-    ready_lessons = Column(JSON)
 
 
 class StudentsDB(Base):
@@ -21,6 +20,15 @@ class StudentsDB(Base):
 
     student_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    teacher_login = Column(String, ForeignKey("teachers.teacher_login"), index=True)
+    ready_lessons= Column(JSON)
+
+
+
+class TeachersDB(Base):
+    __tablename__ = "teachers"
+
+    teacher_id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
     teacher_login = Column(String, ForeignKey("users.login"), index=True)
-
-
+    students = Column(JSON)

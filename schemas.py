@@ -12,7 +12,6 @@ class UserBase(BaseModel):
 
 class User(UserBase):
     id: int
-    ready_lessons: dict
 
     class Config:
         orm_mode = True
@@ -28,7 +27,6 @@ class UserInfo(BaseModel):
     surname: str
     role: str
     login: str
-    ready_lessons: dict
 
 
 #################################
@@ -40,6 +38,7 @@ class StudentBase(BaseModel):
 
 class Student(StudentBase):
     student_id: int
+    ready_lessons: dict
 
     class Config:
         orm_mode = True
@@ -48,3 +47,21 @@ class Student(StudentBase):
 class StudentCreate(StudentBase):
     pass
 
+
+##################################
+
+class TeacherBase(BaseModel):
+    user_id: int
+    teacher_login: str
+
+
+class TeacherCreate(TeacherBase):
+    pass
+
+
+class Teacher(TeacherBase):
+    teacher_id: int
+    students: dict
+
+    class Config:
+        orm_mode = True
