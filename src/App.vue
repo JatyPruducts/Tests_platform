@@ -5,8 +5,17 @@
 </template>
 
 <script>
+import HomePage from './views/HomePage.vue';
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    HomePage
+  },
+  data() {
+    return {
+      
+    }
+  }
 };
 </script>
