@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'HomePage',
   data(){
@@ -51,8 +53,16 @@ export default {
       }
       document.getElementById("input-1").classList.remove('is-invalid');
       document.getElementById("input-2").classList.remove('is-invalid');
+      this.login();
       alert(JSON.stringify(this.form));
       this.$router.push('/admin/main');
+    },
+    async login()
+    {
+        const response = await axios.get(`http://127.0.0.1:8000/user/login/`, {
+          user_login: this.form.login,
+          user_password: this.form.password
+        }); 
     }
   }
 };

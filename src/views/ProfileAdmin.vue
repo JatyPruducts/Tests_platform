@@ -108,6 +108,5 @@ export default {
 <style>
 .active-lecture {
     font-weight: bold; /* Делает текст жирным */
-    color: blue; /* Изменяет цвет текста, можно выбрать любой */
 }
 </style>
