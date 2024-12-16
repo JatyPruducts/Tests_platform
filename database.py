@@ -1,13 +1,13 @@
-# В этом файле описываем само подключение к базе данных
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
-SQL_DB_URL = "sqlite:///./sql_app.db"
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-engine = create_engine(SQL_DB_URL, connect_args={"check_same_thread": False})  # connect_args = False - убираем
-# ограничение на работу из различных потоков
+SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 
-session_local = sessionmaker(autoflush=False, autocommit=False, bind=engine)
+engine = create_async_engine(
+    SQLALCHEMY_DATABASE_URL, echo=False, future=True
+)
+
+AsyncSessionLocal = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 Base = declarative_base()

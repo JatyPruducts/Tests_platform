@@ -1,4 +1,4 @@
-# В этом файле описываем схемы данных
+from typing import Optional, List
 from pydantic import BaseModel
 
 
@@ -7,35 +7,27 @@ class UserBase(BaseModel):
     surname: str
     role: str
     login: str
+
+
+class UserCreate(UserBase):
     password: str
 
 
 class User(UserBase):
     id: int
-    ready_lessons: dict
 
     class Config:
         orm_mode = True
 
 
-class UserCreate(UserBase):
-    pass
-
-
-class UserInfo(BaseModel):
-    id: int
-    name: str
-    surname: str
-    role: str
-    login: str
-    ready_lessons: dict
-
-
-#################################
-
 class StudentBase(BaseModel):
     user_id: int
     teacher_login: str
+    ready_lessons: Optional[List[dict]] = []
+
+
+class StudentCreate(StudentBase):
+    pass
 
 
 class Student(StudentBase):
@@ -45,6 +37,18 @@ class Student(StudentBase):
         orm_mode = True
 
 
-class StudentCreate(StudentBase):
+class TeacherBase(BaseModel):
+    user_id: int
+    teacher_login: str
+    students: Optional[List[dict]] = []
+
+
+class TeacherCreate(TeacherBase):
     pass
 
+
+class Teacher(TeacherBase):
+    teacher_id: int
+
+    class Config:
+        orm_mode = True
