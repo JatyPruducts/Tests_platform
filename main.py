@@ -1,11 +1,24 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from fastapi.middleware.cors import CORSMiddleware
 from database import AsyncSessionLocal, engine, Base
 import crud, schemas
 
 app = FastAPI()
 
+# Настройка CORS
+origins = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Создаем таблицы при старте (опционально)
 @app.on_event("startup")
