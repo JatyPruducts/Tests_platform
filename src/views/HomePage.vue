@@ -45,7 +45,15 @@ export default {
       console.log(response);
       // Логика при успешном входе
       alert('Добро пожаловать, ' + response.data.name +'!');
-      this.$router.push('/admin/main'); 
+      if (response.data.role == "Student")
+            {
+              this.$router.push('/student/main'); 
+            }
+            else if (response.data.role == "Teacher")
+            {
+              this.$router.push('/teacher/main'); 
+            }
+            else {this.$router.push('/admin/main');} 
      }
       catch (error) {
       if (error.response) {

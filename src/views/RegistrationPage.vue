@@ -12,7 +12,7 @@
         <b-form-group id="login" label="Логин:" label-for="input-1" class="text-start">
           <b-form-input id="input-1" type="text" placeholder="Введите логин" v-model="form.login"></b-form-input>
         </b-form-group>
-        <b-form-group id="Role" label="Выберите роль:" label-for="input-4" class="text-start">
+        <b-form-group id="Role" label="Выберите роль:" class="text-start">
             <b-form-select v-model="selected" :options="roles"></b-form-select>
         </b-form-group>
         <b-form-group id="password" label="Пароль:" label-for="input-2" class="text-start">
@@ -34,19 +34,19 @@ import axios from 'axios'
     name: 'RegistrationPage',
     data(){
       return{
+        selected: "null",
         form:{
           name:'',
           surname:'',
           login:'',
           password:'',
-          confirmPassword:'',
-          selected: "Student"
+          confirmPassword:'',  
         },
         roles: [
             {value: "Student", text: 'Ученик'},
             {value: "Teacher", text: 'Учитель'}
         ],
-        
+
       }
     },
     methods:
@@ -59,11 +59,19 @@ import axios from 'axios'
             surname: this.form.surname,
             login: this.form.login,
             password: this.form.password,
-            role: this.form.selected
+            role: this.selected
             }); 
             // Логика при успешном входе
             alert('Добро пожаловать, ' + response.data.name +'!');
-            this.$router.push('/admin/main'); 
+            if (response.data.role == "Student")
+            {
+              this.$router.push('/student/main'); 
+            }
+            else if (response.data.role == "Teacher")
+            {
+              this.$router.push('/teacher/main'); 
+            }
+            else {this.$router.push('/admin/main');}
           }
            catch(error){
             // Логика при ошибке входа
