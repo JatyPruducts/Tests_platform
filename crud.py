@@ -2,7 +2,7 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Users, StudentsDB, TeachersDB
-from schemas import UserCreate, StudentCreate, TeacherCreate
+from schemas import User, UserCreate, StudentCreate, TeacherCreate
 
 
 # CRUD для пользователей
@@ -82,13 +82,26 @@ async def delete_student(db: AsyncSession, student_id: int):
 async def create_teacher(db: AsyncSession, teacher: TeacherCreate):
     db_teacher = TeachersDB(
         user_id=teacher.user_id,
-        teacher_login=teacher.teacher_login,
-        students=teacher.students
-    )
+        teacher_login=teacher.teacher_login)
     db.add(db_teacher)
     await db.commit()
     await db.refresh(db_teacher)
     return db_teacher
+
+
+async def get_students_by_teacher_login(db: AsyncSession, teacher_login: str):
+    # Запрос на получение пользователей (учеников) напрямую с использованием подзапроса
+    print('Вошли')
+    stmt = (
+        select(Users)
+        .join(StudentsDB)
+        .where(StudentsDB.teacher_login == teacher_login)
+    )
+    print(stmt)
+    result = await db.execute(stmt)
+    users = result.scalars().all()
+
+    return [User(id=user.id, name=user.name, surname=user.surname, role=user.role, login=user.login) for user in users]
 
 
 async def get_teacher(db: AsyncSession, teacher_id: int):

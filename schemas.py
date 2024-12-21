@@ -40,7 +40,6 @@ class Student(StudentBase):
 class TeacherBase(BaseModel):
     user_id: int
     teacher_login: str
-    students: Optional[List[dict]] = []
 
 
 class TeacherCreate(TeacherBase):
