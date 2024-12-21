@@ -1,14 +1,16 @@
 <template>  
   <div class="bg-white position-absolute mx-auto top-50 start-50 translate-middle 
-  border border-opacity-25 p-3 shadow rounded" style="height: 350px; width: 400px;">
+  border border-opacity-25 p-3 shadow rounded" style="height: 420px; width: 400px;">
     <h2>Вход в аккаунт</h2>
-    <b-form @submit="onSubmit" class="mx-auto border border-dark rounded border-opacity-25 p-3 shadow" style="height: 250px; width: 300px;">
+    <b-form @submit="login" class="mx-auto border border-dark rounded border-opacity-25 p-3 shadow" style="height: 320px; width: 300px;">
       <b-form-group id="login" label="Логин:" label-for="input-1" class="text-start">
         <b-form-input id="input-1" type="text" placeholder="Введите логин" v-model="form.login"></b-form-input>
       </b-form-group>
       <b-form-group id="password" label="Пароль:" label-for="input-2" class="text-start">
         <b-form-input id="input-2" type="password" placeholder="Введите пароль" v-model="form.password"></b-form-input>
       </b-form-group>
+      <h5>Нет учетной записи?</h5>
+      <b-link href="/registration">Зарегистрироваться</b-link> <br> <br>
       <b-button type="submit" variant="primary">Войти</b-button>
     </b-form>
   </div>
@@ -55,14 +57,22 @@ export default {
       document.getElementById("input-2").classList.remove('is-invalid');
       this.login();
       alert(JSON.stringify(this.form));
-      this.$router.push('/admin/main');
+      //this.$router.push('/admin/main');
     },
     async login()
     {
-        const response = await axios.get(`http://127.0.0.1:8000/user/login/`, {
+        const response = await axios.get(`http://127.0.0.1:8000/users/{user_id}`, {
           user_login: this.form.login,
           user_password: this.form.password
         }); 
+        if (response.data.success) {
+            // Логика при успешном входе
+            alert('Успешный вход!');
+            this.$router.push('/admin/main'); 
+        } else {
+            // Логика при ошибке входа
+            alert('Ошибка входа: ' + response.data.message);
+      }
     }
   }
 };

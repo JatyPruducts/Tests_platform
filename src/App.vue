@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import HomePage from './views/HomePage.vue';
+//import HomePage from './views/HomePage.vue';
 
 export default {
   name: 'App',
-  components: {
-    HomePage
-  },
+//  components: {
+//    HomePage
+//  },
   data() {
     return {
       
