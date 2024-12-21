@@ -10,7 +10,7 @@
         <b-form-input id="input-2" type="password" placeholder="Введите пароль" v-model="form.password"></b-form-input>
       </b-form-group>
       <h5>Нет учетной записи?</h5>
-      <b-link href="/registration">Зарегистрироваться</b-link> <br> <br>
+      <b-link href="/registration" style="font-size: large;">Зарегистрироваться</b-link> <br> <br>
       <b-button type="submit" variant="primary">Войти</b-button>
     </b-form>
   </div>
