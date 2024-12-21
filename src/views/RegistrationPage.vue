@@ -61,7 +61,7 @@ import axios from 'axios'
             role: this.form.selected
             }); 
             // Логика при успешном входе
-            alert('Добро пожаловать, ' + response.name +'!');
+            alert('Добро пожаловать, ' + response.data.name +'!');
             this.$router.push('/admin/main'); 
           }
            catch(error){
