@@ -61,18 +61,23 @@ export default {
     },
     async login()
     {
-        const response = await axios.get(`http://127.0.0.1:8000/users/{user_id}`, {
-          user_login: this.form.login,
-          user_password: this.form.password
+        try{const response = await axios.post(`http://127.0.0.1:8000/users/authorization/`, {
+          login: this.form.login,
+          password: this.form.password
         }); 
-        if (response.data.success) {
-            // Логика при успешном входе
-            alert('Успешный вход!');
-            this.$router.push('/admin/main'); 
+        // Логика при успешном входе
+        console.log(response);
+        alert('Успешный вход!');
+        this.$router.push('/admin/main'); 
+        }
+        catch (error) {
+        if (error.response) {
+          console.error(error.response.data); // Выводим всю информацию об ошибке
+          alert('Ошибка входа: ' + JSON.stringify(error.response.data));
         } else {
-            // Логика при ошибке входа
-            alert('Ошибка входа: ' + response.data.message);
-      }
+          alert('Ошибка при выполнении запроса: ' + error.message);
+        }
+    }
     }
   }
 };
