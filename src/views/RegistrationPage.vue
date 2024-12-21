@@ -30,9 +30,9 @@
           password:'',
           confirmPassword:''
         },
-        selected: "Schoolboy",
+        selected: "Student",
         roles: [
-            {value: "Schoolboy", text: 'Ученик'},
+            {value: "Student", text: 'Ученик'},
             {value: "Teacher", text: 'Учитель'}
         ]
       }
