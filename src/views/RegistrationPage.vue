@@ -1,8 +1,8 @@
 <template>  
     <div class="bg-white position-absolute mx-auto top-50 start-50 translate-middle 
-    border border-opacity-25 p-3 shadow rounded" style="height: 700px; width: 400px;">
+    border border-opacity-25 p-3 shadow rounded" style="height: 770px; width: 400px;">
       <h2>Регистрация</h2>
-      <b-form @submit="onSubmit" class="mx-auto border border-dark rounded border-opacity-25 p-3 shadow" style="height: 600px; width: 300px;">
+      <b-form @submit="Registration" class="mx-auto border border-dark rounded border-opacity-25 p-3 shadow" style="height: 670px; width: 300px;">
         <b-form-group id="name" label="Имя:" label-for="input-4" class="text-start">
           <b-form-input id="input-4" type="text" placeholder="Введите имя" v-model="form.name"></b-form-input>
         </b-form-group>
@@ -21,6 +21,8 @@
         <b-form-group id="confirmPassword" label="Подтвердите пароль:" label-for="input-3" class="text-start">
           <b-form-input id="input-3" type="password" placeholder="Подтвердите пароль" v-model="form.confirmPassword"></b-form-input>
         </b-form-group>
+        <h5>Имеется учетная запись?</h5>
+        <b-link href="/">Войти</b-link> <br> <br>
         <b-button type="submit" variant="primary">Зарегистрироваться</b-button>
       </b-form>
     </div>
@@ -48,41 +50,25 @@ import axios from 'axios'
     },
     methods:
     {
-        onSubmit(event)
-        {
-            event.preventDefault();
-            //Проверка на пустые значения
-            if (this.form.login == "") return document.getElementById("input-1").classList.add('is-invalid'); 
-            document.getElementById("input-1").classList.remove('is-invalid');  
-            if (this.form.password == "") return document.getElementById("input-2").classList.add('is-invalid');
-            document.getElementById("input-2").classList.remove('is-invalid');
-            if (this.form.confirmPassword == "") return document.getElementById("input-3").classList.add('is-invalid');
-            document.getElementById("input-3").classList.remove('is-invalid');
-            //Проверяем подтверждение пароля
-            if (this.form.password != this.form.confirmPassword) 
-            {
-                this.form.confirmPassword = ""; 
-                document.getElementById("input-3").placeholder = "Пароли не совпадают"
-                return document.getElementById("input-3").classList.add('is-invalid');
-            }
-            document.getElementById("input-3").classList.remove('is-invalid');
-        },
         async Registration()
         {
-          const response = await axios.post(`http://127.0.0.1:8000/users/`, {
-          user_login: this.form.login,
-          user_password: this.form.password,
-          user_role: this.form.selected
-        }); 
-        if (response.data.success) {
+          try{
+            const response = await axios.post(`http://127.0.0.1:8000/users/`, {
+            name: this.form.name,
+            surname: this.form.surname,
+            login: this.form.login,
+            password: this.form.password,
+            role: this.form.selected
+            }); 
             // Логика при успешном входе
-            alert('Успешный вход!');
+            alert('Добро пожаловать, ' + response.name +'!');
             this.$router.push('/admin/main'); 
-        } else {
+          }
+           catch(error){
             // Логика при ошибке входа
-            alert('Ошибка входа: ' + response.data.message);
+            alert('Ошибка входа: ' + error.response.data.detail);
+          }
+        } 
       }
-        }
     }
-}
 </script>
