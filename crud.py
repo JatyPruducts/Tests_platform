@@ -1,5 +1,4 @@
 from sqlalchemy.future import select
-from sqlalchemy.orm import joinedload
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Users, StudentsDB, TeachersDB
 from schemas import User, UserCreate, StudentCreate, TeacherCreate

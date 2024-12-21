@@ -43,8 +43,8 @@ async def create_new_user(user: schemas.UserCreate, db: AsyncSession = Depends(g
 
 
 @app.post("/users/authorization/", response_model=schemas.User)
-async def authorization_user(login: str, password: str, db: AsyncSession = Depends(get_db)):
-    user = await crud.check_user(db=db, login=login, password=password)
+async def authorization_user(user: schemas.UserAuth, db: AsyncSession = Depends(get_db)):
+    user = await crud.check_user(db=db, login=user.login, password=user.password)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
