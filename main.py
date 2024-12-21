@@ -42,6 +42,22 @@ async def create_new_user(user: schemas.UserCreate, db: AsyncSession = Depends(g
     return await crud.create_user(db=db, user=user)
 
 
+@app.post("/users/authorization/", response_model=schemas.User)
+async def authorization_user(login: str, password: str, db: AsyncSession = Depends(get_db)):
+    user = await crud.check_user(db=db, login=login, password=password)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+@app.get("/users/info/{login}", response_model=schemas.User)
+async def get_user_info(login: str, db: AsyncSession = Depends(get_db)):
+    user = await crud.get_user_by_login(db=db, login=login)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
 @app.get("/users/", response_model=list[schemas.User])
 async def read_users(skip: int = 0, limit: int = 100, db: AsyncSession = Depends(get_db)):
     users = await crud.get_users(db, skip=skip, limit=limit)
