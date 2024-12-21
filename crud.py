@@ -16,6 +16,11 @@ async def get_user_by_login(db: AsyncSession, login: str):
     return result.scalar_one_or_none()
 
 
+async def check_user(db: AsyncSession, login: str, password: str):
+    result = await db.execute(select(Users).where(Users.login == login).where(Users.password == password))
+    return result.scalars().first()
+
+
 async def create_user(db: AsyncSession, user: UserCreate):
     db_user = Users(
         name=user.name,
