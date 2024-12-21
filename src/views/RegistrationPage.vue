@@ -22,7 +22,7 @@
           <b-form-input id="input-3" type="password" placeholder="Подтвердите пароль" v-model="form.confirmPassword"></b-form-input>
         </b-form-group>
         <h5>Имеется учетная запись?</h5>
-        <b-link href="/">Войти</b-link> <br> <br>
+        <b-link href="/" style="font-size: large;">Войти</b-link> <br> <br>
         <b-button type="submit" variant="primary">Зарегистрироваться</b-button>
       </b-form>
     </div>
@@ -45,7 +45,8 @@ import axios from 'axios'
         roles: [
             {value: "Student", text: 'Ученик'},
             {value: "Teacher", text: 'Учитель'}
-        ]
+        ],
+        
       }
     },
     methods:
