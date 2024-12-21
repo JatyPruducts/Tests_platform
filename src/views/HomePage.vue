@@ -44,7 +44,7 @@ export default {
       // Логика при успешном входе
       console.log(response);
       // Логика при успешном входе
-      alert('Успешный вход!');
+      alert('Добро пожаловать, ' + response.data.name +'!');
       this.$router.push('/admin/main'); 
      }
       catch (error) {
