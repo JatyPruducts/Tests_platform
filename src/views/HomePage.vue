@@ -30,54 +30,31 @@ export default {
     }
   },
   methods: {
-    onSubmit(event)
+    async login()
     {
-      var logex = "vanya"; //Пример логина, потом заменим на вводимое из БД
-      var pasex = 123; //Пример пароля, потом заменим на вводимое из БД
-      event.preventDefault();
-      //Проверка на пустые значения
       if (this.form.login == "") return document.getElementById("input-1").classList.add('is-invalid'); 
       document.getElementById("input-1").classList.remove('is-invalid');  
       if (this.form.password == "") return document.getElementById("input-2").classList.add('is-invalid');
       document.getElementById("input-2").classList.remove('is-invalid');
-      //Проверка на верно введенные значения
-      if (this.form.login != logex) 
-      {
-        this.form.login = ""; 
-        document.getElementById("input-1").placeholder = "Введите существующий логин"
-        return document.getElementById("input-1").classList.add('is-invalid');
-      }
-      if (this.form.password != pasex) 
-      {
-        this.form.password = ""; 
-        document.getElementById("input-2").placeholder = "Введите верный пароль"
-        return document.getElementById("input-2").classList.add('is-invalid');
-      }
-      document.getElementById("input-1").classList.remove('is-invalid');
-      document.getElementById("input-2").classList.remove('is-invalid');
-      this.login();
-      alert(JSON.stringify(this.form));
-      //this.$router.push('/admin/main');
-    },
-    async login()
-    {
-        try{const response = await axios.post(`http://127.0.0.1:8000/users/authorization/`, {
-          login: this.form.login,
-          password: this.form.password
-        }); 
-        // Логика при успешном входе
-        console.log(response);
-        alert('Успешный вход!');
-        this.$router.push('/admin/main'); 
+      try{
+        const response = await axios.post(`http://127.0.0.1:8000/users/authorization/`, {
+        login: this.form.login,
+        password: this.form.password
+      }); 
+      // Логика при успешном входе
+      console.log(response);
+      // Логика при успешном входе
+      alert('Успешный вход!');
+      this.$router.push('/admin/main'); 
+     }
+      catch (error) {
+      if (error.response) {
+        console.error(error.response.data); // Выводим всю информацию об ошибке
+        alert('Ошибка входа: ' + error.response.data.detail);
+      } else {
+        alert('Ошибка при выполнении запроса: ' + error.response.data.detail);
         }
-        catch (error) {
-        if (error.response) {
-          console.error(error.response.data); // Выводим всю информацию об ошибке
-          alert('Ошибка входа: ' + JSON.stringify(error.response.data));
-        } else {
-          alert('Ошибка при выполнении запроса: ' + error.message);
-        }
-    }
+      }
     }
   }
 };
