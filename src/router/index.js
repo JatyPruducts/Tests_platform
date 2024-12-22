@@ -1,16 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
-import ProfileAdmin from '../views/ProfileAdmin.vue';
-import ProfileStudent from '../views/ProfileStudent.vue';
-import ProfileTeacher from '../views/ProfileTeacher.vue';
+import LectionsAdmin from '../views/LectionsAdmin.vue';
+import LectionsStudent from '../views/LectionsStudent.vue';
+import LectionsTeacher from '../views/LectionsTeacher.vue';
+import ProfileAdmin from '@/views/ProfileAdmin.vue';
+import ProfileStudent from '@/views/ProfileStudent.vue';
+import ProfileTeacher from '@/views/ProfileTeacher.vue';
 
 import RegistrationPage from '@/views/RegistrationPage.vue';
 const routes = [
     { path: '/', name:'home', component: HomePage },
-    { path: '/admin/main/', name:'ProfileAdmin', component: ProfileAdmin},
+    { path: '/admin/main/', name:'LectionsAdmin', component: LectionsAdmin},
     { path: '/registration', name:'registration', component: RegistrationPage },
-    { path: '/student/main/', name:'ProfileStudent', component: ProfileStudent},
-    { path: '/teacher/main/', name:'ProfileTeacher', component: ProfileTeacher},
+    { path: '/student/main/', name:'LectionsStudent', component: LectionsStudent},
+    { path: '/teacher/main/', name:'LectionsTeacher', component: LectionsTeacher},
+    { path: '/teacher/profile/', name:'ProfileTeacher', component: ProfileTeacher},
+    { path: '/student/profile/', name:'ProfileStudent', component: ProfileStudent},
+    { path: '/admin/profile/', name:'ProfileAdmin', component: ProfileAdmin}
 ];
 const router = createRouter({
     history: createWebHistory(), 
