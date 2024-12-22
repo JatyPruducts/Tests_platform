@@ -43,7 +43,7 @@ export default {
       }); 
       // Логика при успешном входе
       console.log(response);
-      // Логика при успешном входе
+      localStorage.setItem('user', JSON.stringify(response.data));
       alert('Добро пожаловать, ' + response.data.name +'!');
       if (response.data.role == "Student")
             {

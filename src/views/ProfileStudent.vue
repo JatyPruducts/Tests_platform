@@ -28,10 +28,7 @@
                         <i class='bi bi-person-square'></i> 
                          <em> {{ Uname }}</em> <!--заменим на Имя из БД -->
                     </template>
-                    <b-dropdown-item href="#">Статистика</b-dropdown-item>
-                    <b-dropdown-item href="#">Учителя</b-dropdown-item>
-                    <b-dropdown-item href="#">Ученики</b-dropdown-item>
-                    <b-dropdown-item href="#">Пользователи</b-dropdown-item>
+                    <b-dropdown-item href="#">Профиль</b-dropdown-item>
                 </b-nav-item-dropdown>
         </b-navbar>
     </header>
@@ -56,7 +53,7 @@ export default {
     name: 'ProfileStudent',
     data() {
       return {
-        Uname: "Иван",
+        Uname: "",
         text: "",
         lectureTitle: "",
         currentLectureIndex: 0, // Индекс текущей лекции
@@ -71,6 +68,9 @@ export default {
         if (this.lectures.length > 0) {
             this.loadLecture(this.lectures[0].title, this.lectures[0].file);
         }
+        const userData = localStorage.getItem('user');
+        this.user = JSON.parse(userData);
+        this.Uname = this.user.name;
     },
     methods: {
         async loadLecture(title, file) {

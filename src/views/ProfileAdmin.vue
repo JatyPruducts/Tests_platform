@@ -28,6 +28,7 @@
                         <i class='bi bi-person-square'></i> 
                          <em> {{ Uname }}</em> <!--заменим на Имя из БД -->
                     </template>
+                    <b-dropdown-item href="#">Профиль</b-dropdown-item>
                     <b-dropdown-item href="#">Статистика</b-dropdown-item>
                     <b-dropdown-item href="#">Учителя</b-dropdown-item>
                     <b-dropdown-item href="#">Ученики</b-dropdown-item>

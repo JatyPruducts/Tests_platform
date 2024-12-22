@@ -61,6 +61,7 @@ import axios from 'axios'
             password: this.form.password,
             role: this.selected
             }); 
+            localStorage.setItem('user', JSON.stringify(response.data));
             // Логика при успешном входе
             alert('Добро пожаловать, ' + response.data.name +'!');
             if (response.data.role == "Student")
