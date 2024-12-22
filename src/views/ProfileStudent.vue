@@ -9,7 +9,7 @@
                 <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
                     <template #button-content>
                         <i class='bi bi-person-square'></i> 
-                        <em> {{ Uname }}</em> <!--заменим на Имя из БД -->
+                        <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
                     <b-dropdown-item href="#">Профиль</b-dropdown-item>
                 </b-nav-item-dropdown>
@@ -56,6 +56,10 @@ export default {
         this.login = this.user.login;
         this.role = this.user.role;
         this.id = this.user.id;
+        // if (this.teacherLogin)
+        // {
+        //     document.getElementById("LinkButton").classList.add("hidden");
+        // }
     },
     methods:
     {
@@ -69,8 +73,9 @@ export default {
             const response = await axios.post(`http://127.0.0.1:8000/students/`, {
                 user_id: this.id,
                 teacher_login: document.getElementById("login").value,
-            })
-            console.log(response)
+            });
+            this.teacherLogin = response.data.teacher_login;
+            document.getElementById("LinkForm").classList.add("hidden");
         }
     }
 }
