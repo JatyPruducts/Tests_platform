@@ -6,6 +6,7 @@ import LectionsTeacher from '../views/LectionsTeacher.vue';
 import ProfileAdmin from '@/views/ProfileAdmin.vue';
 import ProfileStudent from '@/views/ProfileStudent.vue';
 import ProfileTeacher from '@/views/ProfileTeacher.vue';
+import StudentsList from '@/views/StudentsList.vue';
 
 import RegistrationPage from '@/views/RegistrationPage.vue';
 const routes = [
@@ -16,7 +17,8 @@ const routes = [
     { path: '/teacher/main/', name:'LectionsTeacher', component: LectionsTeacher},
     { path: '/teacher/profile/', name:'ProfileTeacher', component: ProfileTeacher},
     { path: '/student/profile/', name:'ProfileStudent', component: ProfileStudent},
-    { path: '/admin/profile/', name:'ProfileAdmin', component: ProfileAdmin}
+    { path: '/admin/profile/', name:'ProfileAdmin', component: ProfileAdmin},
+    { path: '/teacher/students/', name:'StudentsList', component: StudentsList}
 ];
 const router = createRouter({
     history: createWebHistory(), 

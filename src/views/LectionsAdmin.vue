@@ -26,7 +26,7 @@
                 <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
                     <template #button-content>
                         <i class='bi bi-person-square'></i> 
-                         <em> {{ Uname }}</em> <!--заменим на Имя из БД -->
+                         <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
                     <b-dropdown-item href="/admin/profile/">Профиль</b-dropdown-item>
                     <b-dropdown-item href="#">Статистика</b-dropdown-item>
@@ -58,7 +58,7 @@ export default {
     name: 'LectionsAdmin',
     data() {
       return {
-        Uname: "",
+        name: "",
         text: "",
         lectureTitle: "",
         currentLectureIndex: 0, // Индекс текущей лекции
@@ -76,7 +76,7 @@ export default {
         }
         const userData = localStorage.getItem('user');
         this.user = JSON.parse(userData);
-        this.Uname = this.user.name;
+        this.name = this.user.name;
     },
     methods: {
         async loadLecture(title, file) {
