@@ -45,11 +45,11 @@ export default {
       console.log(response);
       localStorage.setItem('user', JSON.stringify(response.data));
       alert('Добро пожаловать, ' + response.data.name +'!');
-      if (response.data.role == "Student")
+      if (response.data.role == "Ученик")
             {
               this.$router.push('/student/main'); 
             }
-            else if (response.data.role == "Teacher")
+            else if (response.data.role == "Учитель")
             {
               this.$router.push('/teacher/main'); 
             }
