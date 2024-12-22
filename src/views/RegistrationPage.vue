@@ -43,8 +43,8 @@ import axios from 'axios'
           confirmPassword:'',  
         },
         roles: [
-            {value: "Student", text: 'Ученик'},
-            {value: "Teacher", text: 'Учитель'}
+            {value: "Ученик", text: 'Ученик'},
+            {value: "Учитель", text: 'Учитель'}
         ],
 
       }
@@ -64,11 +64,11 @@ import axios from 'axios'
             localStorage.setItem('user', JSON.stringify(response.data));
             // Логика при успешном входе
             alert('Добро пожаловать, ' + response.data.name +'!');
-            if (response.data.role == "Student")
+            if (response.data.role == "Ученик")
             {
               this.$router.push('/student/main'); 
             }
-            else if (response.data.role == "Teacher")
+            else if (response.data.role == "Учитель")
             {
               this.$router.push('/teacher/main'); 
             }
