@@ -2,9 +2,9 @@
     <header>
         <b-navbar toggleable="lg" type="light" class="bg-info bg-gradient shadow">
             <div>
-                <button type="button" class="btn border rounded p-2" data-bs-toggle="offcanvas" data-bs-target="#Sections" aria-controls="Sections" style="background-color: #f1faa3; color: black;">
+                <b-button type="button" class="btn border rounded p-2" href="/teacher/main/" aria-controls="Sections" style="background-color: #f1faa3; color: black;">
                     <i class="bi bi-list"> Разделы</i>
-                </button>
+                </b-button>
             </div>
                 <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
                     <template #button-content>
