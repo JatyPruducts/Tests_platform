@@ -39,8 +39,9 @@
                 <div v-html="text"></div>  <!--текст будем брать из текстового файла-->
             </b-card-body>
             <b-card-footer>
-                <b-button @click="prevLecture" :disabled="currentLectureIndex === 0">Предыдущая лекция</b-button>
-                <b-button @click="nextLecture" :disabled="currentLectureIndex === lectures.length - 1">Следующая лекция</b-button>
+                <b-button @click="prevLecture" :disabled="currentLectureIndex === 0" variant="primary">Предыдущая лекция</b-button>
+                <b-button @click="Test" variant="success">Пройти тест</b-button>
+                <b-button @click="nextLecture" :disabled="currentLectureIndex === lectures.length - 1" variant="primary">Следующая лекция</b-button>
             </b-card-footer>
         </b-card>
     </body>
