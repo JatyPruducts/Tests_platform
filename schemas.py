@@ -24,6 +24,7 @@ class UserAuth(BaseModel):
     login: str
     password: str
 
+
 class StudentBase(BaseModel):
     user_id: int
     teacher_login: str

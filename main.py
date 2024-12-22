@@ -83,6 +83,9 @@ async def remove_user(user_id: int, db: AsyncSession = Depends(get_db)):
 # Эндпоинты для студентов
 @app.post("/students/", response_model=schemas.Student)
 async def create_new_student(student: schemas.StudentCreate, db: AsyncSession = Depends(get_db)):
+    teacher = await crud.check_teacher(db, student.teacher_login)
+    if teacher is None:
+        raise HTTPException(status_code=404, detail="Teacher not found")
     return await crud.create_student(db=db, student=student)
 
 
@@ -91,17 +94,17 @@ async def read_students(skip: int = 0, limit: int = 100, db: AsyncSession = Depe
     return await crud.get_students(db, skip=skip, limit=limit)
 
 
-@app.get("/students/{student_id}", response_model=schemas.Student)
-async def read_student(student_id: int, db: AsyncSession = Depends(get_db)):
-    db_student = await crud.get_student(db, student_id)
+@app.get("/students/{user_id}", response_model=schemas.Student)
+async def read_student(user_id: int, db: AsyncSession = Depends(get_db)):
+    db_student = await crud.get_student(db, user_id)
     if db_student is None:
         raise HTTPException(status_code=404, detail="Student not found")
     return db_student
 
 
-@app.delete("/students/{student_id}")
-async def remove_student(student_id: int, db: AsyncSession = Depends(get_db)):
-    success = await crud.delete_student(db, student_id)
+@app.delete("/students/{user_id}")
+async def remove_student(user_id: int, db: AsyncSession = Depends(get_db)):
+    success = await crud.delete_student(db, user_id)
     if not success:
         raise HTTPException(status_code=404, detail="Student not found")
     return {"detail": "Student deleted successfully"}
@@ -118,9 +121,9 @@ async def read_teachers(skip: int = 0, limit: int = 100, db: AsyncSession = Depe
     return await crud.get_teachers(db, skip=skip, limit=limit)
 
 
-@app.get("/teachers/{teacher_id}", response_model=schemas.Teacher)
-async def read_teacher(teacher_id: int, db: AsyncSession = Depends(get_db)):
-    db_teacher = await crud.get_teacher(db, teacher_id)
+@app.get("/teachers/{user_id}", response_model=schemas.Teacher)
+async def read_teacher(user_id: int, db: AsyncSession = Depends(get_db)):
+    db_teacher = await crud.get_teacher(db, user_id)
     if db_teacher is None:
         raise HTTPException(status_code=404, detail="Teacher not found")
     return db_teacher
@@ -136,9 +139,10 @@ async def read_students(teacher_login: str, db: AsyncSession = Depends(get_db)):
 
     return students
 
-@app.delete("/teachers/{teacher_id}")
-async def remove_teacher(teacher_id: int, db: AsyncSession = Depends(get_db)):
-    success = await crud.delete_teacher(db, teacher_id)
+
+@app.delete("/teachers/{user_id}")
+async def remove_teacher(user_id: int, db: AsyncSession = Depends(get_db)):
+    success = await crud.delete_teacher(db, user_id)
     if not success:
         raise HTTPException(status_code=404, detail="Teacher not found")
     return {"detail": "Teacher deleted successfully"}
