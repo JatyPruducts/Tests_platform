@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, JSON
-from sqlalchemy.orm import relationship
 from database import Base
 
 
@@ -14,8 +13,6 @@ class Users(Base):
     password = Column(String)
 
 
-
-
 class StudentsDB(Base):
     __tablename__ = "students"
 
@@ -23,7 +20,6 @@ class StudentsDB(Base):
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
     teacher_login = Column(String, ForeignKey("teachers.teacher_login"), index=True)
     ready_lessons = Column(JSON)
-
 
 
 class TeachersDB(Base):

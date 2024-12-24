@@ -5,6 +5,20 @@ from schemas import User, UserCreate, StudentCreate, TeacherCreate
 
 
 # CRUD для пользователей
+async def create_user(db: AsyncSession, user: UserCreate):
+    db_user = Users(
+        name=user.name,
+        surname=user.surname,
+        role=user.role,
+        login=user.login,
+        password=user.password
+    )
+    db.add(db_user)
+    await db.commit()
+    await db.refresh(db_user)
+    return db_user
+
+
 async def get_user(db: AsyncSession, user_id: int):
     result = await db.execute(select(Users).where(Users.id == user_id))
     return result.scalar_one_or_none()
@@ -18,20 +32,6 @@ async def get_user_by_login(db: AsyncSession, login: str):
 async def check_user(db: AsyncSession, login: str, password: str):
     result = await db.execute(select(Users).where(Users.login == login).where(Users.password == password))
     return result.scalars().first()
-
-
-async def create_user(db: AsyncSession, user: UserCreate):
-    db_user = Users(
-        name=user.name,
-        surname=user.surname,
-        role=user.role,
-        login=user.login,
-        password=user.password
-    )
-    db.add(db_user)
-    await db.commit()
-    await db.refresh(db_user)
-    return db_user
 
 
 async def get_users(db: AsyncSession, skip: int = 0, limit: int = 100):
