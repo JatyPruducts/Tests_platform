@@ -113,6 +113,9 @@ async def remove_student(user_id: int, db: AsyncSession = Depends(get_db)):
 # Эндпоинты для учителей
 @app.post("/teachers/", response_model=schemas.Teacher)
 async def create_new_teacher(teacher: schemas.TeacherCreate, db: AsyncSession = Depends(get_db)):
+    db_teacher = await crud.check_teacher(db, teacher.teacher_login)
+    if db_teacher:
+        raise HTTPException(status_code=400, detail="Teacher with this login already exists")
     return await crud.create_teacher(db=db, teacher=teacher)
 
 
