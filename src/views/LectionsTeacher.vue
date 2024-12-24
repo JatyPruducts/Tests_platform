@@ -25,7 +25,7 @@
             </div>
                 <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
                     <template #button-content>
-                        <i class='bi bi-person-square'></i> 
+                         
                          <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
                     <b-dropdown-item href="/teacher/profile/">Профиль</b-dropdown-item>
@@ -60,9 +60,9 @@ export default {
         lectureTitle: "",
         currentLectureIndex: 0, // Индекс текущей лекции
         lectures: [
-            {title: "1.1 Общие понятия", file: "/lectures/Lecture1.docx"},
-            {title: "1.2 Числовые типы данных", file: "/lectures/Lecture2.docx"},       
-            {title: "1.3 Строковые и логические типы данных", file: "/lectures/Lecture3.docx"},
+            {title: "1.1 Общие понятия", file: "/lectures/Lecture1.docx", test: "1"},
+            {title: "1.2 Числовые типы данных", file: "/lectures/Lecture2.docx", test: "2"},       
+            {title: "1.3 Строковые и логические типы данных", file: "/lectures/Lecture3.docx", test: "3"},
         ]
         };
     },
@@ -103,6 +103,10 @@ export default {
                 const nextLecture = this.lectures[this.currentLectureIndex + 1];
                 this.loadLecture(nextLecture.title, nextLecture.file);
             }
+        },
+        Test()
+        {
+            this.$router.push('/teacher/test/'+(this.currentLectureIndex+1) +'/'); 
         }
     }
 }

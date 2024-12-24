@@ -1,0 +1,28 @@
+<br><h3>Какое значение будет присвоено переменной <с> в результате выполнения программы?</h3><br>
+<h5>а, b = 11, 63</h5>
+<h5>с = b = 55</h5>
+<h5>d = b + с – а</h5> <br>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    11
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    63
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="true" >
+  <label class="form-check-label">
+    55
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    99
+  </label>
+</div>

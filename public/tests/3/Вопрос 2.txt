@@ -1,0 +1,30 @@
+<br><h3>Выберите вариант, в котором написан результат выполнения программы</h3><br>
+<h5>a, b, c, d = ‘1’, ‘2’, ‘3’, ‘4’</h5>
+<h5>a += ‘12’  #112</h5>
+<h5>b *= 3  # 222</h5>
+<h5>c += a + c  # 31123</h5>
+<h5>print(a + b + c + d)</h5> <br>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    112222311234
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="true">
+  <label class="form-check-label">
+    11222211234
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    122331234
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    1122333311234
+  </label>
+</div>

@@ -25,7 +25,6 @@
             </div>
                 <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
                     <template #button-content>
-                        <i class='bi bi-person-square'></i> 
                          <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
                     <b-dropdown-item href="/admin/profile/">Профиль</b-dropdown-item>
@@ -106,6 +105,10 @@ export default {
                 const nextLecture = this.lectures[this.currentLectureIndex + 1];
                 this.loadLecture(nextLecture.title, nextLecture.file);
             }
+        },
+        Test()
+        {
+            this.$router.push('/admin/test/'+(this.currentLectureIndex+1) +'/'); 
         }
     }
 }
