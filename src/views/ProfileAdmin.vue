@@ -2,13 +2,13 @@
     <header>
         <b-navbar toggleable="lg" type="light" class="bg-info bg-gradient shadow">
             <div>
-                <b-button type="button" class="btn border rounded p-2" href="/student/main/" aria-controls="Sections" style="background-color: #f1faa3; color: black;">
+                <b-button type="button" class="btn border rounded p-2" href="/admin/main/" aria-controls="Sections" style="background-color: #f1faa3; color: black;">
                     <i class="bi bi-list"> Разделы</i>
                 </b-button>
             </div>
                 <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
                     <template #button-content>
-                        <i class='bi bi-person-square'></i> 
+                         
                         <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
                     <b-dropdown-item href="#">Профиль</b-dropdown-item>

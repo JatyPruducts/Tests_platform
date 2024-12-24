@@ -1,0 +1,25 @@
+<br><h3>Выберите вариант, в котором описано назначение функции abs(x):</h3><br>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    Извлечение квадратного корня из х
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="true" >
+  <label class="form-check-label">
+    Вычисление модуля x
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    Получение случайного целого числа от 0 до x
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    Округление x до указанного количества знаков после запятой
+  </label>
+</div>

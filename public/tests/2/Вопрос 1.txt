@@ -1,0 +1,30 @@
+<br><h3>Определите значения переменной <y> после выполнения фрагмента программы.</h3><br>
+<h5>x, y = 11, 5</h5>
+<h5>z = y</h5>
+<h5>y = x % y</h5>
+<h5>x = z</h5>
+<h5>y = (y + 2) * z</h5> <br>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    5
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="true">
+  <label class="form-check-label">
+    15
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    20
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    21
+  </label>
+</div>
