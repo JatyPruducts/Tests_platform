@@ -83,20 +83,21 @@
             const selectedOption = document.querySelector('input[name="flexRadioDefault"]:checked');
             if (selectedOption) {
                 const selectedId = selectedOption.id;
-                const allOptions = document.querySelectorAll('.form-check-input');
+                // const allOptions = document.querySelectorAll('.form-check-input');
   
-                allOptions.forEach(option => {
-                    if (option.id === this.correctAnswerId) {
-                        option.parentElement.style.backgroundColor = 'lightgreen'; // Правильный ответ
-                    } else {
-                        option.parentElement.style.backgroundColor = 'lightcoral'; // Неправильный ответ
-                    }
-                });
+                // allOptions.forEach(option => {
+                //     if (option.id === this.correctAnswerId) {
+                //         option.parentElement.style.backgroundColor = 'lightgreen'; // Правильный ответ
+                //     } else {
+                //         option.parentElement.style.backgroundColor = 'lightcoral'; // Неправильный ответ
+                //     }
+                // });
   
                 if (selectedId !== this.correctAnswerId) {
                     selectedOption.parentElement.style.backgroundColor = 'lightcoral'; // Подсветка неправильного ответа
                 }
-  
+                else {selectedOption.parentElement.style.backgroundColor = 'lightgreen';}
+
                 this.isAnswered = true; // Устанавливаем флаг после ответа
             }
         }

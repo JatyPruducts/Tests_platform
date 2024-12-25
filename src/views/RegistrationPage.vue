@@ -13,7 +13,7 @@
           <b-form-input id="input-1" type="text" placeholder="Введите логин" v-model="form.login"></b-form-input>
         </b-form-group>
         <b-form-group id="Role" label="Выберите роль:" class="text-start">
-            <b-form-select v-model="selected" :options="roles"></b-form-select>
+            <b-form-select v-model="selected" :options="roles" id="input-6"></b-form-select>
         </b-form-group>
         <b-form-group id="password" label="Пароль:" label-for="input-2" class="text-start">
           <b-form-input id="input-2" type="password" placeholder="Введите пароль" v-model="form.password"></b-form-input>
@@ -34,7 +34,7 @@ import axios from 'axios'
     name: 'RegistrationPage',
     data(){
       return{
-        selected: "null",
+        selected: "",
         form:{
           name:'',
           surname:'',
@@ -54,6 +54,57 @@ import axios from 'axios'
         async Registration()
         {
           try{
+            if (this.form.name === "") {
+                document.getElementById("input-4").classList.add('is-invalid');
+                return;
+            } else {
+                document.getElementById("input-4").classList.remove('is-invalid');
+            }
+
+            // Проверка фамилии
+            if (this.form.surname === "") {
+                document.getElementById("input-5").classList.add('is-invalid');
+                return;
+            } else {
+                document.getElementById("input-5").classList.remove('is-invalid');
+            }
+
+            // Проверка логина
+            if (this.form.login === "") {
+                document.getElementById("input-1").classList.add('is-invalid');
+                return;
+            } else {
+                document.getElementById("input-1").classList.remove('is-invalid');
+            }
+
+            // Проверка роли
+            if (this.selected === "") {
+                document.getElementById("input-6").classList.add('is-invalid');
+                return;
+            } else {
+                document.getElementById("input-6").classList.remove('is-invalid');
+            }
+
+            // Проверка пароля
+            if (this.form.password === "") {
+                document.getElementById("input-2").classList.add('is-invalid');
+                return;
+            } else {
+                document.getElementById("input-2").classList.remove('is-invalid');
+            }
+
+            // Проверка подтверждения пароля
+            if (this.form.confirmPassword === "") {
+                document.getElementById("input-3").classList.add('is-invalid');
+                return;
+            } else {
+                document.getElementById("input-3").classList.remove('is-invalid');
+            }
+
+            if (this.form.password !== this.form.confirmPassword) {
+              alert("Пароли не совпадают!");
+                return; 
+            }
             const response = await axios.post(`http://127.0.0.1:8000/users/`, {
             name: this.form.name,
             surname: this.form.surname,
