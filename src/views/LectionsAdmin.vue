@@ -28,10 +28,7 @@
                          <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
                     <b-dropdown-item href="/admin/profile/">Профиль</b-dropdown-item>
-                    <b-dropdown-item href="#">Статистика</b-dropdown-item>
-                    <b-dropdown-item href="#">Учителя</b-dropdown-item>
-                    <b-dropdown-item href="#">Ученики</b-dropdown-item>
-                    <b-dropdown-item href="#">Пользователи</b-dropdown-item>
+                    <b-dropdown-item href="/admin/manipulations/">Управление пользователями</b-dropdown-item>
                 </b-nav-item-dropdown>
         </b-navbar>
     </header>
