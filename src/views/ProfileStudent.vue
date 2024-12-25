@@ -47,7 +47,7 @@ export default {
         teacherLogin:'отсутствует'
         }   
     },
-    mounted() 
+    async mounted() 
     {
         const userData = localStorage.getItem('user');
         this.user = JSON.parse(userData);
@@ -56,10 +56,17 @@ export default {
         this.login = this.user.login;
         this.role = this.user.role;
         this.id = this.user.id;
-        // if (this.teacherLogin)
-        // {
-        //     document.getElementById("LinkButton").classList.add("hidden");
-        // }
+        try{
+            const response = await axios.get(`http://127.0.0.1:8000/students/${this.id}/`);
+            if (response && response.data) 
+        {
+            document.getElementById("LinkButton").classList.add("hidden");
+            this.teacherLogin = response.data.teacher_login;
+        }
+        } catch(error) {
+            console.log(error.response.data.detail)
+        }
+        
     },
     methods:
     {
