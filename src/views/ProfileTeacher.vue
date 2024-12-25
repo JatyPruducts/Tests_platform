@@ -21,12 +21,15 @@
                 Имя: {{ name }} <br>
                 Фамилия: {{ surname }} <br>
                 Роль: {{ role }} <br>
+                Соединение: {{ linkTitle }} <br>
+                <b-button @click="LinkForm" variant="success" id="LinkButton"> Начать подключение учеников</b-button>
             </b-card-body>
         </b-card>
     </body>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'ProfileTeacher',
     data() {
@@ -36,16 +39,39 @@ export default {
         login:'',
         role:'',
         text: "",
+        linkTitle:'закрыто',
         }   
     },
-    mounted() 
+    async mounted() 
     {
         const userData = localStorage.getItem('user');
         this.user = JSON.parse(userData);
+        this.id = this.user.id;
         this.name = this.user.name;
         this.surname = this.user.surname;
         this.login = this.user.login;
         this.role = this.user.role;
+        const response = await axios.get(`http://127.0.0.1:8000/teachers/${this.id}`);
+        if (response && response.data) 
+        {
+            document.getElementById("LinkButton").classList.add("hidden");
+            this.linkTitle = 'открыто';
+        }
+    },
+    methods:{
+        async LinkForm()
+        {
+            await axios.post(`http://127.0.0.1:8000/teachers/`,{
+                user_id: this.id,
+                teacher_login: this.login
+            });
+        }
     }
 }
 </script>
+<style>
+.hidden
+{
+    display: none;
+}
+</style>
