@@ -1,0 +1,12 @@
+axios==1.7.9
+bootstrap==5.3.3
+bootstrap-icons==1.11.3
+bootstrap-vue==2.23.1
+bootstrap-vue-3==0.5.1
+bootstrap-vue-next==0.26.10
+core-js==3.8.3
+mammoth==1.8.0
+popper.js==1.16.1
+portal-vue==3.0.0
+vue==3.2.13
+vue-router==4.5.0
