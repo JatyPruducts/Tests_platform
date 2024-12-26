@@ -65,6 +65,7 @@ export default {
                 user_id: this.id,
                 teacher_login: this.login
             });
+            document.getElementById("LinkButton").classList.add("hidden")
         }
     }
 }

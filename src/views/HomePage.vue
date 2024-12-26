@@ -53,7 +53,10 @@ export default {
             {
               this.$router.push('/teacher/main'); 
             }
-            else {this.$router.push('/admin/main');} 
+            else if (response.data.role == "Администратор") 
+            {
+              this.$router.push('/admin/main');
+            } 
      }
       catch (error) {
       if (error.response) {
