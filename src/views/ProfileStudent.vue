@@ -11,7 +11,7 @@
                          
                         <em> {{ name }}</em> <!--заменим на Имя из БД -->
                     </template>
-                    <b-dropdown-item href="#">Профиль</b-dropdown-item>
+                    <b-dropdown-item href="/student/profile/">Профиль</b-dropdown-item>
                 </b-nav-item-dropdown>
         </b-navbar>
     </header>
@@ -25,7 +25,7 @@
                 <b-button @click="LinkForm" variant="primary" id="LinkButton"> Присоединиться к учителю</b-button>
                 <b-input-group prepend="Введите логин учителя:" class="mt-3 hidden" style="width: 50dvw;" id="LinkForm">
                     <b-form-input id="login"></b-form-input>
-                    <b-button @click="LinkToTeacher" variant="success">Button</b-button>
+                    <b-button @click="LinkToTeacher" variant="success">Подключиться</b-button>
                 </b-input-group>
             </b-card-body>
         </b-card>
