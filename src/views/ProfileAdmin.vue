@@ -1,19 +1,6 @@
 <template>
     <header>
-        <b-navbar toggleable="lg" type="light" class="bg-info bg-gradient shadow">
-            <div>
-                <b-button type="button" class="btn border rounded p-2" href="/admin/main/" aria-controls="Sections" style="background-color: #f1faa3; color: black;">
-                    <i class="bi bi-list"> Разделы</i>
-                </b-button>
-            </div>
-                <b-nav-item-dropdown class="border rounded p-2" style="background-color: #f1faa3;font-size: large;" right>
-                    <template #button-content>
-                        <em> {{ name }}</em> <!--заменим на Имя из БД -->
-                    </template>
-                    <b-dropdown-item href="#">Профиль</b-dropdown-item>
-                    <b-dropdown-item href="/admin/manipulations/">Управление пользователями</b-dropdown-item>
-                </b-nav-item-dropdown>
-        </b-navbar>
+        <AdminHeader></AdminHeader>
     </header>
     <body>
         <b-card>
@@ -27,8 +14,13 @@
 </template>
 
 <script>
+import AdminHeader from './Components/AdminHeader.vue';
+
 export default {
     name: 'ProfileAdmin',
+    components:{
+        AdminHeader
+    },
     data() {
       return {
         name: "",
