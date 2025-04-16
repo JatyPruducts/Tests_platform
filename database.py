@@ -1,7 +1,10 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
+from motor.motor_asyncio import AsyncIOMotorClient
 
 SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./database.db"
+MONGO_URL = "mongodb://localhost:27017"
+client = AsyncIOMotorClient(MONGO_URL)
 
 engine = create_async_engine(
     SQLALCHEMY_DATABASE_URL, echo=False, future=True)
@@ -9,3 +12,4 @@ engine = create_async_engine(
 AsyncSessionLocal = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 Base = declarative_base()
+mongo_db = client.users_tests

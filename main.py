@@ -1,7 +1,8 @@
+from typing import Any, AsyncGenerator
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.middleware.cors import CORSMiddleware
-from database import AsyncSessionLocal, engine, Base
+from database import AsyncSessionLocal, engine, Base, mongo_db
 import crud, schemas
 
 app = FastAPI()
@@ -20,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Создаем таблицы при старте (опционально)
 @app.on_event("startup")
 async def startup():
@@ -28,9 +30,13 @@ async def startup():
 
 
 # Зависимость для получения сессии БД
-async def get_db() -> AsyncSession:
+async def get_db() -> AsyncGenerator[Any, Any]:
     async with AsyncSessionLocal() as db:
         yield db
+
+
+async def get_mongo() -> AsyncGenerator[Any, Any]:
+    yield mongo_db
 
 
 # Эндпоинты для пользователей
@@ -149,3 +155,48 @@ async def remove_teacher(user_id: int, db: AsyncSession = Depends(get_db)):
     if not success:
         raise HTTPException(status_code=404, detail="Teacher not found")
     return {"detail": "Teacher deleted successfully"}
+
+
+@app.post("/create_test", response_model=schemas.TestCreate)
+async def create_test(test: schemas.TestBase, db: AsyncSession = Depends(get_db)):
+    current_test = await crud.check_test(db, test.test_name)
+    if current_test is not None:
+        raise HTTPException(status_code=400, detail="Test with this name already exists")
+    return await crud.create_test(db=db, test=test)
+
+
+@app.get("/test/{test_name}", response_model=schemas.TestCreate)
+async def get_test(test_name: str, db: AsyncSession = Depends(get_db)):
+    return await crud.check_test(db, test_name)
+
+
+@app.post("/user/test-result")
+async def update_test_result(user_login: str, test_name: str, result_data: int, db: AsyncSession = Depends(get_db)):
+    user = await crud.get_user_by_login(db, user_login)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    test = await crud.check_test(db, test_name)
+    if test is None:
+        raise HTTPException(status_code=404, detail="Test not found")
+    if result_data < 0 or result_data > 100:
+        raise HTTPException(status_code=400, detail="Result must be between 0 and 100")
+    # Вызываем функцию для обновления результата теста
+    success = await crud.post_user_result(mongo_db, user_login, test_name, result_data)
+    if not success:
+        raise HTTPException(status_code=400, detail="Не удалось обновить результат теста")
+    return {"message": "Результат успешно обновлён"}
+
+
+@app.get("/user/test_result/{user_login}/{test_name}", response_model=schemas.UserResults)
+async def read_test_result(user_login: str, test_name: str, db: AsyncSession = Depends(get_db)):
+    user = await crud.get_user_by_login(db, user_login)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    test = await crud.check_test(db, test_name)
+    if test is None:
+        raise HTTPException(status_code=404, detail="Test not found")
+    # Получаем результат теста по логину пользователя и названию теста
+    result = await crud.get_user_test_result(mongo_db, user_login, test_name)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Результат теста не найден")
+    return schemas.UserResults(user_login=user_login, test_name=test_name, result=result)

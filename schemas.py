@@ -56,3 +56,20 @@ class Teacher(TeacherBase):
 
     class Config:
         orm_mode = True
+
+
+class TestBase(BaseModel):
+    test_name: str
+
+
+class TestCreate(TestBase):
+    test_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class UserResults(BaseModel):
+    user_login: str
+    test_name: str
+    result: int

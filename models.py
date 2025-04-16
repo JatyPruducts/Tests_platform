@@ -29,3 +29,9 @@ class TeachersDB(Base):
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
     teacher_login = Column(String, ForeignKey("users.login"), index=True)
 
+
+class TestsDB(Base):
+    __tablename__ = "tests"
+
+    test_id = Column(Integer, primary_key=True, index=True)
+    test_name = Column(String, index=True)

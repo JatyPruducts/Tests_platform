@@ -1,7 +1,9 @@
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from models import Users, StudentsDB, TeachersDB
-from schemas import User, UserCreate, StudentCreate, TeacherCreate
+from sqlalchemy.testing.provision import upsert
+
+from models import Users, StudentsDB, TeachersDB, TestsDB
+from schemas import User, UserCreate, StudentCreate, TeacherCreate, TestBase
 
 
 # CRUD для пользователей
@@ -131,3 +133,40 @@ async def delete_teacher(db: AsyncSession, user_id: int):
         await db.commit()
         return True
     return False
+
+
+async def create_test(db: AsyncSession, test: TestBase):
+    db_test = TestsDB(
+        test_name=test.test_name,
+    )
+    db.add(db_test)
+    await db.commit()
+    await db.refresh(db_test)
+    return db_test
+
+
+async def check_test(db: AsyncSession, test_name: str):
+    result = await db.execute(select(TestsDB).where(TestsDB.test_name == test_name))
+    return result.scalars().first()
+
+
+async def post_user_result(mongo_db, user_login: str, test_name: str, result: int):
+    collection = mongo_db.users_tests
+
+    await collection.update_one(
+        {"_id": user_login},
+        {"$set": {f"result.{test_name}": result}},
+        upsert=True
+    )
+    return True
+
+
+async def get_user_test_result(mongo_db, user_login: str, test_name: str):
+    collection = mongo_db.users_tests
+    document = await collection.find_one(
+        {"_id": user_login},
+        {f"result.{test_name}": 1}
+    )
+    if document and "result" in document and test_name in document["result"]:
+        return document["result"][test_name]
+    return None
