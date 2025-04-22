@@ -200,3 +200,15 @@ async def read_test_result(user_login: str, test_name: str, db: AsyncSession = D
     if result is None:
         raise HTTPException(status_code=404, detail="Результат теста не найден")
     return schemas.UserResults(user_login=user_login, test_name=test_name, result=result)
+
+
+@app.get("/users/test_result/{user_login}", response_model=list[schemas.UserResults])
+async def read_user_results(user_login: str, db: AsyncSession = Depends(get_db)):
+    user = await crud.get_user_by_login(db, user_login)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    # Получаем результаты тестов пользователя по логину
+    results = await crud.get_user_results(mongo_db, user_login)
+    if results is None:
+        raise HTTPException(status_code=404, detail="Results not found")
+    return results

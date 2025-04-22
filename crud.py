@@ -170,3 +170,9 @@ async def get_user_test_result(mongo_db, user_login: str, test_name: str):
     if document and "result" in document and test_name in document["result"]:
         return document["result"][test_name]
     return None
+
+
+async def get_user_results(mongo_db, user_login: str):
+    collection = mongo_db.users_tests
+    document = await collection.find_one({"_id": user_login}, {"result": 1})
+    return document
