@@ -202,7 +202,7 @@ async def read_test_result(user_login: str, test_name: str, db: AsyncSession = D
     return schemas.UserResults(user_login=user_login, test_name=test_name, result=result)
 
 
-@app.get("/users/test_result/{user_login}", response_model=list[schemas.UserResults])
+@app.get("/users/test_result/{user_login}")
 async def read_user_results(user_login: str, db: AsyncSession = Depends(get_db)):
     user = await crud.get_user_by_login(db, user_login)
     if user is None:
