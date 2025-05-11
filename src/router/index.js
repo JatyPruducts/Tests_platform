@@ -19,6 +19,8 @@ import TestStudent3 from '@/views/TestStudent/TestStudent3.vue';
 import UserManipulation from '@/views/UserManipulation.vue';
 import StudentDetails from '@/views/StudentDetails.vue';
 import FinalTestStudent from '@/views/TestStudent/FinalTestStudent.vue';
+import FinalTestAdmin from '@/views/TestAdmin/FinalTestAdmin.vue';
+import FinalTestTeacher from '@/views/TestTeacher/FinalTestTeacher.vue';
 
 import RegistrationPage from '@/views/RegistrationPage.vue';
 const routes = [
@@ -42,7 +44,9 @@ const routes = [
     { path: '/student/test/3/', name:'TestStudent3', component: TestStudent3},
     { path: '/admin/manipulations/', name:'UserManipulation', component: UserManipulation},
     { path: '/student/:login/', name: 'StudentDetails', component: StudentDetails},
-    { path: '/student/final-test', name: 'FinalTest', component: FinalTestStudent}
+    { path: '/student/final-test', name: 'FinalTestS', component: FinalTestStudent},
+    { path: '/teacher/final-test', name: 'FinalTestT', component: FinalTestTeacher},
+    { path: '/admin/final-test', name: 'FinalTestA', component: FinalTestAdmin}
 
 ];
 const router = createRouter({
