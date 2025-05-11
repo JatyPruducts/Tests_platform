@@ -44,7 +44,6 @@
 </template>
   
   <script>
-  import axios from 'axios';
 export default {
     name: 'TestStudent2',
     data() {
@@ -112,74 +111,48 @@ export default {
                 console.error('Error fetching the test:', error);
             }
         },
-        async nextTest() {
-            if (this.isLastTest) {
-                try{
-                const correctCount = this.correctAnswers.filter(Boolean).length;
-                const result = Math.round((correctCount / this.tests.length) * 100);
-
-                // Исправленный запрос с параметрами в query string
-                await axios.post(
-                    `http://127.0.0.1:8000/user/test-result`,
-                    null, // Пустое тело запроса
-                    {
-                        params: { // Параметры в URL
-                            user_login: this.login,
-                            test_name: "Числовые типы данных",
-                            result_data: result
-                        }
-                    }
-                );
-                this.testCompleted = true;
-            }
-            catch (error) {
-                    if (error.response) {
-                        // Обработка ошибок сервера
-                        console.error('Ошибка сервера:', error.response.data);
-                        console.error('Статус:', error.response.status);
-                        console.error('Заголовки:', error.response.headers);
-                    } else if (error.request) {
-                        // Ошибки без ответа от сервера
-                        console.error('Нет ответа от сервера:', error.request);
-                    } else {
-                        // Другие ошибки
-                        console.error('Ошибка:', error.message);
-                    }
-                }
-            } else {
-                const nextTest = this.tests[this.currentTestIndex + 1];
-                this.loadTest(nextTest.title, nextTest.file);
-            }
-        },
+        nextTest() {
+          if (this.isLastTest) {
+              this.testCompleted = true;
+          } else {
+              const nextTest = this.tests[this.currentTestIndex + 1];
+              this.loadTest(nextTest.title, nextTest.file);
+          }
+      },
         checkAnswer() {
-            const selectedOption = document.querySelector('input[name="flexRadioDefault"]:checked');
-            if (selectedOption) {
-                const selectedId = selectedOption.id;
-                
-                // Записываем результат ответа
-                this.correctAnswers[this.currentTestIndex] = (selectedId === this.correctAnswerId);
-                this.isAnswered = true;
-            }
-        },
+          const selectedOption = document.querySelector('input[name="flexRadioDefault"]:checked');
+          if (selectedOption) {
+              const selectedId = selectedOption.id;
+              const allOptions = document.querySelectorAll('.form-check-input');
+
+              allOptions.forEach(option => {
+                  if (option.id === this.correctAnswerId) {
+                      option.parentElement.style.backgroundColor = 'lightgreen';
+                  } else if (option.id === selectedId && selectedId !== this.correctAnswerId) {
+                      option.parentElement.style.backgroundColor = 'lightcoral';
+                  } else {
+                      option.parentElement.style.backgroundColor = '';
+                  }
+              });
+
+              this.correctAnswers[this.currentTestIndex] = (selectedId === this.correctAnswerId);
+              this.isAnswered = true;
+          }
+      }
     }
   }
   </script>
   
   <style>
-h1.mb-4 {
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-h3 {
-    color: #4a4a4a;
-    margin: 15px 0;
-    font-size: 1.5rem;
-}
-
-/* Сохраним существующие стили */
 .active-test {
-    font-weight: bold;
+  font-weight: bold;
+}
+.form-check-label {
+  display: block;
+  padding: 8px;
+  margin: 4px 0;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
   </style>
   
