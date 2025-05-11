@@ -16,28 +16,30 @@
         </b-navbar>
     </header>
     <body>
-        <b-card v-if="!testCompleted">
-            <b-card-body style="position:relative; height:80vh; overflow-y:scroll; text-align: left; font-size: large;">
+        <b-card>
+            <b-card-body v-if="!testCompleted" style="position:relative; height:80vh; overflow-y:scroll; text-align: left; font-size: large;">
                 <h1>{{ testTitle }}</h1>
                 <div v-html="text"></div>
             </b-card-body>
-            <b-card-footer>
+            
+            <b-card-body v-else style="position:relative; height:80vh; overflow-y:auto; text-align: center;">
+                <h1 class="mb-4">Тест завершен!</h1>
+                <h3>Правильных ответов: {{ scorePercentage }}%</h3>
+                <h3>Оценка: {{ grade }}</h3>
+            </b-card-body>
+
+            <b-card-footer v-if="!testCompleted">
                 <b-button @click="checkAnswer" variant="success">Ответить</b-button>
                 <b-button 
                     v-if="isAnswered" 
                     @click="nextTest" 
                     variant="primary"
+                    class="ml-2"
                 >
                     {{ isLastTest ? 'Завершить тест' : 'Следующий вопрос' }}
                 </b-button>
             </b-card-footer>
         </b-card>
-        
-        <div v-else class="text-center mt-5">
-            <h1>Тест завершен!</h1>
-            <h3>Правильных ответов: {{ scorePercentage}}%</h3>
-            <h3>Оценка: {{ grade }}</h3>
-        </div>
     </body>
 </template>
   
@@ -164,8 +166,20 @@ export default {
   </script>
   
   <style>
-  .active-test {
-    font-weight: bold; /* Делает текст жирным */
-  }
+h1.mb-4 {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+h3 {
+    color: #4a4a4a;
+    margin: 15px 0;
+    font-size: 1.5rem;
+}
+
+/* Сохраним существующие стили */
+.active-test {
+    font-weight: bold;
+}
   </style>
   

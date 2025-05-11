@@ -17,6 +17,7 @@ import TestStudent1 from '@/views/TestStudent/TestStudent1.vue';
 import TestStudent2 from '@/views/TestStudent/TestStudent2.vue';
 import TestStudent3 from '@/views/TestStudent/TestStudent3.vue';
 import UserManipulation from '@/views/UserManipulation.vue';
+import StudentDetails from '@/views/StudentDetails.vue';
 
 import RegistrationPage from '@/views/RegistrationPage.vue';
 const routes = [
@@ -39,6 +40,7 @@ const routes = [
     { path: '/student/test/2/', name:'TestStudent2', component: TestStudent2},
     { path: '/student/test/3/', name:'TestStudent3', component: TestStudent3},
     { path: '/admin/manipulations/', name:'UserManipulation', component: UserManipulation},
+    { path: '/student/:login/', name: 'StudentDetails', component: StudentDetails},
 
 ];
 const router = createRouter({

@@ -20,16 +20,17 @@
         <b-card>
             <b-card-body style="position:relative; height:87vh; overflow-y:scroll; text-align: left; font-size: large;">
                 <h1>Ваши ученики:</h1>
-                <b-table :items="students" :fields="fields" striped hover>
-                <template #cell(name)="data">
-                    <strong>{{ data.item.name }}</strong>
-                </template>
-                <template #cell(surname)="data">
-                    <strong>{{ data.item.surname }}</strong>
-                </template>
-                <template #cell(login)="data">
-                    <strong>{{ data.item.login }}</strong>
-                </template>
+                <b-table :items="students" :fields="fields" striped hover style="text-align: center;">
+                    <!-- ... существующие шаблоны ... -->
+                    <template #cell(actions)="data">
+                        <b-button 
+                            variant="info" 
+                            @click="viewStudent(data.item.login)"
+                            class="ml-2" 
+                        >
+                            <i class="bi bi-info-circle"></i> Посмотреть подробнее
+                        </b-button>
+                    </template>
                 </b-table>
             </b-card-body>
         </b-card>
@@ -50,24 +51,39 @@ export default {
             { key: 'name', label: 'Имя' },
             { key: 'surname', label: 'Фамилия' },
             { key: 'login', label: 'Логин' },
+            { key: 'actions', label: 'Действия' }
         ],
         };
       },
-    async mounted()
-    {
+      methods: {
+        viewStudent(login) {
+            this.$router.push({ 
+            name: 'StudentDetails',
+            params: { login: login }
+            });
+        }
+        },
+    async mounted() {
         try {
-        const userData = localStorage.getItem('user');
-        this.user = JSON.parse(userData);
-        this.name = this.user.name;
-        this.login = this.user.login;
-        const response = await axios.get(`http://127.0.0.1:8000/students_by_teacher/${this.login}`, {
-            teacher_login: this.login
-            }); 
-        this.students = response.data;
-    } catch(error)
-    {
-        alert('Ошибка: ' + error.response.data.detail);
+            const userData = localStorage.getItem('user');
+            this.user = JSON.parse(userData);
+            this.name = this.user.name;
+            this.login = this.user.login;
+            
+            // Исправленный запрос
+            const response = await axios.get(
+                `http://127.0.0.1:8000/students_by_teacher/${this.login}`
+            );
+            
+            this.students = response.data;
+        } catch(error) {
+            console.error('Ошибка загрузки:', error);
+            if (error.response) {
+                alert('Ошибка: ' + error.response.data.detail);
+            } else {
+                alert('Сервер недоступен');
+            }
+        }
     }
-    },
 }
 </script>
