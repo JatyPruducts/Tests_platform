@@ -41,7 +41,24 @@
             </b-card-body>
             <b-card-footer>
                 <b-button @click="prevLecture" :disabled="currentLectureIndex === 0" variant="primary">Предыдущая лекция</b-button>
-                <b-button @click="Test" variant="success">Пройти тест</b-button>
+                
+                <b-button 
+                    v-if="currentLectureIndex === 3" 
+                    @click="FinalTest" 
+                    variant="warning"
+                    class="mx-2"
+                >
+                    Пройти итоговый тест
+                </b-button>
+                <b-button 
+                    v-else 
+                    @click="Test" 
+                    variant="success"
+                    class="mx-2"
+                >
+                    Пройти тест
+                </b-button>
+                
                 <b-button @click="nextLecture" :disabled="currentLectureIndex === lectures.length - 1" variant="primary">Следующая лекция</b-button>
             </b-card-footer>
         </b-card>
@@ -63,6 +80,7 @@ export default {
             {title: "1.1 Общие понятия", file: "/lectures/Lecture1.docx", test: "1"},
             {title: "1.2 Числовые типы данных", file: "/lectures/Lecture2.docx", test: "2"},       
             {title: "1.3 Строковые и логические типы данных", file: "/lectures/Lecture3.docx", test: "3"},
+            {title: "Подытоживание темы 1", file: "/lectures/Conclusion1.docx", test: "4"},
         ]
         };
     },
@@ -107,6 +125,9 @@ export default {
         Test()
         {
             this.$router.push('/teacher/test/'+(this.currentLectureIndex+1) +'/'); 
+        },
+        FinalTest() {
+            this.$router.push('/teacher/final-test/');
         }
     }
 }

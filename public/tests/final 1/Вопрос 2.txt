@@ -1,0 +1,25 @@
+<br><h3>Что выведет код print(round(3.1415, 2))?</h3><br>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="true" value="True" >
+  <label class="form-check-label">
+    3.14
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    3.1
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    3.15
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    3.1415
+  </label>
+</div>

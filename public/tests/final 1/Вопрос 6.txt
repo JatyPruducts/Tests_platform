@@ -1,0 +1,25 @@
+<br><h3>Что выведет код print(ord('A'))?</h3><br>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    97
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    66
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="true" value="True" >
+  <label class="form-check-label">
+    65
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault">
+  <label class="form-check-label">
+    32
+  </label>
+</div>
